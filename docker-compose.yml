@@ -1,0 +1,21 @@
+services:
+  whatsapp-bot:
+    build:
+      context: ./whatsapp-bot
+    container_name: whatsapp-bot
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    networks:
+      - whatsapp-assistants-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+networks:
+  whatsapp-assistants-network:
+    driver: bridge
